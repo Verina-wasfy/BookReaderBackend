@@ -26,8 +26,7 @@ namespace Bookstore.Models
 
         [DataType(DataType.Date)]
         public DateTime PublicationDate { set; get; }
-        //public double SellingPrice { set; get; }
-       // public string BookCover { set; get; }
+
         [ForeignKey("Publisher")]
         public int PublisherID { set; get; }
 
