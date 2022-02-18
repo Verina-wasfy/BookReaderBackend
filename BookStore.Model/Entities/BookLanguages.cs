@@ -18,5 +18,7 @@ namespace Bookstore.Models
         [Column(Order = 1)]
         [ForeignKey("Language")]
         public int LangID { get; set; }
+        public virtual Book Book { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

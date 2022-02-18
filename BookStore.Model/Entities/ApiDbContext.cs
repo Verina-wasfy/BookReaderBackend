@@ -1,7 +1,7 @@
 ﻿using Bookstore.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bookstore
+namespace BookStore.Model.Entities
 {
     public class ApiDbContext : DbContext
     {

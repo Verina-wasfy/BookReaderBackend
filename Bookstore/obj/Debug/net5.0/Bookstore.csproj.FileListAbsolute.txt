@@ -46,7 +46,6 @@ E:\Udacity\BookstoreBackend\Bookstore\bin\Debug\net5.0\runtimes\win-x86\native\M
 E:\Udacity\BookstoreBackend\Bookstore\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 E:\Udacity\BookstoreBackend\Bookstore\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 E:\Udacity\BookstoreBackend\Bookstore\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-E:\Udacity\BookstoreBackend\Bookstore\obj\Debug\net5.0\Bookstore.csproj.AssemblyReference.cache
 E:\Udacity\BookstoreBackend\Bookstore\obj\Debug\net5.0\Bookstore.GeneratedMSBuildEditorConfig.editorconfig
 E:\Udacity\BookstoreBackend\Bookstore\obj\Debug\net5.0\Bookstore.AssemblyInfoInputs.cache
 E:\Udacity\BookstoreBackend\Bookstore\obj\Debug\net5.0\Bookstore.AssemblyInfo.cs

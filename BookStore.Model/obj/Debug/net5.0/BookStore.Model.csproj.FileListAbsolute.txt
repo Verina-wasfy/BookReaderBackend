@@ -1,0 +1,15 @@
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.GeneratedMSBuildEditorConfig.editorconfig
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.AssemblyInfoInputs.cache
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.AssemblyInfo.cs
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.csproj.CoreCompileInputs.cache
+E:\Udacity\BookstoreBackend\BookStore.Model\bin\Debug\net5.0\BookStore.Model.deps.json
+E:\Udacity\BookstoreBackend\BookStore.Model\bin\Debug\net5.0\BookStore.Model.runtimeconfig.json
+E:\Udacity\BookstoreBackend\BookStore.Model\bin\Debug\net5.0\BookStore.Model.runtimeconfig.dev.json
+E:\Udacity\BookstoreBackend\BookStore.Model\bin\Debug\net5.0\BookStore.Model.dll
+E:\Udacity\BookstoreBackend\BookStore.Model\bin\Debug\net5.0\ref\BookStore.Model.dll
+E:\Udacity\BookstoreBackend\BookStore.Model\bin\Debug\net5.0\BookStore.Model.pdb
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.dll
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\ref\BookStore.Model.dll
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.pdb
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.genruntimeconfig.cache
+E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.csproj.AssemblyReference.cache

@@ -18,5 +18,8 @@ namespace Bookstore.Models
         [Column(Order = 1)]
         [ForeignKey("Author")]
         public int AuthorID { get; set; }
+
+        public virtual Book Book { get; set; }
+        public virtual Author Author { get; set; }
     }
 }
