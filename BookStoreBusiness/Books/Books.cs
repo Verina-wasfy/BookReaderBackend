@@ -188,10 +188,57 @@ namespace Bookstore.Services
                                         where Authr.AuthorID == Item.AuthorID && Authr.BookID == BookData.BookID
                                         select Authr).ToList();
 
-                           // Info.
+                            if (Info.Count > 0)
+                            {
+                                // faild delete
+                                return 3;
+                            }
+                            else
+                            {
+                                var Detail = (from Auth in _db.BookAuthors
+                                              where Auth.AuthorID == Item.AuthorID && Auth.BookID == BookData.BookID
+                                              select Auth).FirstOrDefault();
+                                _db.BookAuthors.Remove(Detail);
+                            }
                         }
 
-                    }
+
+                        var BookLang = (from Bk in _db.Books
+                                        join BkLan in _db.BookLanguages
+                                        on Bk.BookID equals BkLan.BookID
+                                        where BookData.BookID == BkLan.BookID
+                                        select new BookAuthors() { AuthorID = BkLan.LangID }).ToList();
+                        foreach (var Lang in BookData.BookLang)
+                        {
+                            if (Lang.DML == "add")
+                            {
+                                _db.BookLanguages.Add(new BookLanguages()
+                                {
+                                    LangID= Lang.LangID,
+                                    BookID = BookData.BookID
+                                });
+                            }
+                            else if (Lang.DML == "delete")
+                            {
+                                var Info = (from Lng in _db.BookLanguages
+                                            where Lng.LangID == Lang.LangID && Lng.BookID == BookData.BookID
+                                            select Lng).ToList();
+
+                                if (Info.Count > 0)
+                                {
+                                    // faild delete
+                                    return 3;
+                                }
+                                else
+                                {
+                                    var Detail = (from Lng in _db.BookLanguages
+                                                  where Lng.LangID == Lang.LangID && Lng.BookID == BookData.BookID
+                                                  select Lng).FirstOrDefault();
+                                    _db.BookLanguages.Remove(Detail);
+                                }
+                            }
+
+                        }
 
                 }
                 _db.SaveChanges();
