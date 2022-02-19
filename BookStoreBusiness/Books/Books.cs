@@ -28,6 +28,7 @@ namespace Bookstore.Services
                            on Book.PublisherID equals Publisher.PublisherID
                            select new BooksEntity()
                            {
+                               BookID=Book.BookID,
                                 AvgRating=Book.AvgRating,
                                 NumberPages=Book.NumberPages,
                                 ISBN13=Book.ISBN13,
@@ -37,7 +38,7 @@ namespace Bookstore.Services
                                 PublisherName=Publisher.PublisherName,
                                 RatingCount=Book.RatingCount,
                                 Title=Book.Title,
-                                TextRreviewsCount=Book.TextRreviewsCount,
+                                TextRreviewsCount=Book.TextReviewsCount,
                                 BookAuth=(from Bk in _db.Books
                                              join BkAuth in _db.BookAuthors
                                              on Bk.BookID equals BkAuth.BookID
@@ -124,21 +125,21 @@ namespace Bookstore.Services
                 {
                     NewBook = new Book()
                     {
-                        Title=BookData.Title,
-                        AvgRating=BookData.AvgRating,
-                        ISBN=BookData.ISBN,
-                        ISBN13=BookData.ISBN13,
-                        NumberPages=BookData.NumberPages,
-                        PublicationDate=BookData.PublicationDate,
-                        RatingCount=BookData.RatingCount,
-                        TextRreviewsCount=BookData.TextRreviewsCount,
-                        PublisherID=BookData.PublisherID
+                        Title = BookData.Title,
+                        AvgRating = BookData.AvgRating,
+                        ISBN = BookData.ISBN,
+                        ISBN13 = BookData.ISBN13,
+                        NumberPages = BookData.NumberPages,
+                        PublicationDate = BookData.PublicationDate,
+                        RatingCount = BookData.RatingCount,
+                        TextReviewsCount = BookData.TextRreviewsCount,
+                        PublisherID = BookData.PublisherID
                     };
 
                     _db.Books.Add(NewBook);
                     _db.SaveChanges();
-                   
-                    foreach(var Item in BookData.BookAuth)
+
+                    foreach (var Item in BookData.BookAuth)
                     {
                         _db.BookAuthors.Add(new BookAuthors()
                         {
@@ -151,7 +152,7 @@ namespace Bookstore.Services
                     {
                         _db.BookLanguages.Add(new BookLanguages()
                         {
-                            LangID=Item.LangID,
+                            LangID = Item.LangID,
                             BookID = BookData.BookID
                         });
                     };
@@ -165,7 +166,7 @@ namespace Bookstore.Services
                     NewBook.ISBN13 = BookData.ISBN13;
                     NewBook.PublicationDate = BookData.PublicationDate;
                     NewBook.RatingCount = BookData.RatingCount;
-                    NewBook.TextRreviewsCount = BookData.TextRreviewsCount;
+                    NewBook.TextReviewsCount = BookData.TextRreviewsCount;
                     NewBook.PublisherID = BookData.PublisherID;
 
                     var BookAuth = (from Bk in _db.Books
@@ -175,14 +176,15 @@ namespace Bookstore.Services
                                     select new BookAuthors() { AuthorID = BkAth.AuthorID }).ToList();
                     foreach (var Item in BookData.BookAuth)
                     {
-                        if(Item.DML== "add")
+                        if (Item.DML == "add")
                         {
                             _db.BookAuthors.Add(new BookAuthors()
                             {
                                 AuthorID = Item.AuthorID,
                                 BookID = BookData.BookID
                             });
-                        }else if (Item.DML == "delete")
+                        }
+                        else if (Item.DML == "delete")
                         {
                             var Info = (from Authr in _db.BookAuthors
                                         where Authr.AuthorID == Item.AuthorID && Authr.BookID == BookData.BookID
@@ -190,7 +192,7 @@ namespace Bookstore.Services
 
                             if (Info.Count > 0)
                             {
-                                // faild delete
+                                // failed delete
                                 return 3;
                             }
                             else
@@ -214,7 +216,7 @@ namespace Bookstore.Services
                             {
                                 _db.BookLanguages.Add(new BookLanguages()
                                 {
-                                    LangID= Lang.LangID,
+                                    LangID = Lang.LangID,
                                     BookID = BookData.BookID
                                 });
                             }
@@ -226,7 +228,7 @@ namespace Bookstore.Services
 
                                 if (Info.Count > 0)
                                 {
-                                    // faild delete
+                                    // failed delete
                                     return 3;
                                 }
                                 else
@@ -240,11 +242,13 @@ namespace Bookstore.Services
 
                         }
 
+                    }
                 }
                 _db.SaveChanges();
 
                 return 1;
             }
+
             catch(Exception ex)
             {
                 return 0;

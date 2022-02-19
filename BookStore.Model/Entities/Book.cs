@@ -10,7 +10,7 @@ namespace Bookstore.Models
     public class Book
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookID { set; get; }
 
         [Required]
@@ -22,7 +22,7 @@ namespace Bookstore.Models
         public double NumberPages { set; get; }
         public float AvgRating { set; get; }
         public double RatingCount { set; get; }
-        public double TextRreviewsCount { set; get; }
+        public double TextReviewsCount { set; get; }
 
         [DataType(DataType.Date)]
         public DateTime PublicationDate { set; get; }

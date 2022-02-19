@@ -10,7 +10,7 @@ namespace Bookstore.Models
     public class Publisher
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PublisherID { set; get; }
 
         public string PublisherName { set; get; }

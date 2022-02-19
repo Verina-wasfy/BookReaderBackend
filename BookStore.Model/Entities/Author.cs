@@ -10,7 +10,7 @@ namespace Bookstore.Models
     public class Author
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AuthorID { set; get; }
 
         [Required]

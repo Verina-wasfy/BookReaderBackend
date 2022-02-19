@@ -10,7 +10,7 @@ namespace Bookstore.Models
     public class Language
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LangID { set; get; }
         public string LangName { set; get; }
         public List <Book> Books { set; get; }
