@@ -8,7 +8,6 @@ namespace BookStore.Model.Entities
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book>Books { get; set; }
         public DbSet<BookAuthors> BookAuthors{ get; set; }
-        public DbSet<BookLanguages> BookLanguages { get; set; }
         public DbSet<Language> languages { set; get; }
         public DbSet<Publisher> Publishers { get; set; }
 
@@ -18,7 +17,6 @@ namespace BookStore.Model.Entities
         {
 
             modelBuilder.Entity<BookAuthors>().HasKey(vf => new { vf.BookID, vf.AuthorID});
-            modelBuilder.Entity<BookLanguages>().HasKey(vf => new { vf.BookID, vf.LangID});
 
 
         }

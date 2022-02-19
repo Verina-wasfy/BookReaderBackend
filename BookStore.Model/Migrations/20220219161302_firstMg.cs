@@ -57,15 +57,22 @@ namespace BookStore.Model.Migrations
                     ISBN = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ISBN13 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumberPages = table.Column<double>(type: "float", nullable: false),
-                    AvgRating = table.Column<float>(type: "real", nullable: false),
+                    AvgRating = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RatingCount = table.Column<double>(type: "float", nullable: false),
                     TextReviewsCount = table.Column<double>(type: "float", nullable: false),
                     PublicationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PublisherID = table.Column<int>(type: "int", nullable: false)
+                    PublisherID = table.Column<int>(type: "int", nullable: false),
+                    LanguageID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.BookID);
+                    table.ForeignKey(
+                        name: "FK_Books_languages_LanguageID",
+                        column: x => x.LanguageID,
+                        principalTable: "languages",
+                        principalColumn: "LangID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Books_Publishers_PublisherID",
                         column: x => x.PublisherID,
@@ -74,7 +81,8 @@ namespace BookStore.Model.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-          
+           
+
             migrationBuilder.CreateTable(
                 name: "BookAuthors",
                 columns: table => new
@@ -99,45 +107,16 @@ namespace BookStore.Model.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-           
-
-            migrationBuilder.CreateTable(
-                name: "BookLanguages",
-                columns: table => new
-                {
-                    BookID = table.Column<int>(type: "int", nullable: false),
-                    LangID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookLanguages", x => new { x.BookID, x.LangID });
-                    table.ForeignKey(
-                        name: "FK_BookLanguages_Books_BookID",
-                        column: x => x.BookID,
-                        principalTable: "Books",
-                        principalColumn: "BookID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookLanguages_languages_LangID",
-                        column: x => x.LangID,
-                        principalTable: "languages",
-                        principalColumn: "LangID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-          
-
+            
             migrationBuilder.CreateIndex(
                 name: "IX_BookAuthors_AuthorID",
                 table: "BookAuthors",
                 column: "AuthorID");
 
-          
-
             migrationBuilder.CreateIndex(
-                name: "IX_BookLanguages_LangID",
-                table: "BookLanguages",
-                column: "LangID");
+                name: "IX_Books_LanguageID",
+                table: "Books",
+                column: "LanguageID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherID",
@@ -147,13 +126,9 @@ namespace BookStore.Model.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-       
+            
             migrationBuilder.DropTable(
                 name: "BookAuthors");
-
-      
-            migrationBuilder.DropTable(
-                name: "BookLanguages");
 
             migrationBuilder.DropTable(
                 name: "Authors");

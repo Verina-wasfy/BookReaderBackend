@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Model.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20220219102938_firstMg")]
+    [Migration("20220219161302_firstMg")]
     partial class firstMg
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,21 +34,6 @@ namespace BookStore.Model.Migrations
                     b.HasIndex("BooksBookID");
 
                     b.ToTable("AuthorBook");
-                });
-
-            modelBuilder.Entity("BookLanguage", b =>
-                {
-                    b.Property<int>("BooksBookID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LanguagesLangID")
-                        .HasColumnType("int");
-
-                    b.HasKey("BooksBookID", "LanguagesLangID");
-
-                    b.HasIndex("LanguagesLangID");
-
-                    b.ToTable("BookLanguage");
                 });
 
             modelBuilder.Entity("Bookstore.Models.Author", b =>
@@ -78,14 +63,17 @@ namespace BookStore.Model.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("AvgRating")
-                        .HasColumnType("real");
+                    b.Property<string>("AvgRating")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN13")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LanguageID")
+                        .HasColumnType("int");
 
                     b.Property<double>("NumberPages")
                         .HasColumnType("float");
@@ -108,6 +96,8 @@ namespace BookStore.Model.Migrations
 
                     b.HasKey("BookID");
 
+                    b.HasIndex("LanguageID");
+
                     b.HasIndex("PublisherID");
 
                     b.ToTable("Books");
@@ -126,21 +116,6 @@ namespace BookStore.Model.Migrations
                     b.HasIndex("AuthorID");
 
                     b.ToTable("BookAuthors");
-                });
-
-            modelBuilder.Entity("Bookstore.Models.BookLanguages", b =>
-                {
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LangID")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookID", "LangID");
-
-                    b.HasIndex("LangID");
-
-                    b.ToTable("BookLanguages");
                 });
 
             modelBuilder.Entity("Bookstore.Models.Language", b =>
@@ -188,28 +163,21 @@ namespace BookStore.Model.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BookLanguage", b =>
-                {
-                    b.HasOne("Bookstore.Models.Book", null)
-                        .WithMany()
-                        .HasForeignKey("BooksBookID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bookstore.Models.Language", null)
-                        .WithMany()
-                        .HasForeignKey("LanguagesLangID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Bookstore.Models.Book", b =>
                 {
+                    b.HasOne("Bookstore.Models.Language", "Language")
+                        .WithMany("Books")
+                        .HasForeignKey("LanguageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Bookstore.Models.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Language");
 
                     b.Navigation("Publisher");
                 });
@@ -233,23 +201,9 @@ namespace BookStore.Model.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("Bookstore.Models.BookLanguages", b =>
+            modelBuilder.Entity("Bookstore.Models.Language", b =>
                 {
-                    b.HasOne("Bookstore.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bookstore.Models.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LangID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Language");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Bookstore.Models.Publisher", b =>

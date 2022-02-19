@@ -12,4 +12,3 @@ E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.dll
 E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\ref\BookStore.Model.dll
 E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.pdb
 E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.genruntimeconfig.cache
-E:\Udacity\BookstoreBackend\BookStore.Model\obj\Debug\net5.0\BookStore.Model.csproj.AssemblyReference.cache

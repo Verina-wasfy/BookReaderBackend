@@ -26,6 +26,8 @@ namespace Bookstore.Services
             var AllData = (from Book in _db.Books
                            join Publisher in _db.Publishers
                            on Book.PublisherID equals Publisher.PublisherID
+                           join Lang in _db.languages
+                           on Book.LanguageID equals Lang.LangID
                            select new BooksEntity()
                            {
                                BookID=Book.BookID,
@@ -33,12 +35,14 @@ namespace Bookstore.Services
                                 NumberPages=Book.NumberPages,
                                 ISBN13=Book.ISBN13,
                                 ISBN=Book.ISBN,
-                                PublicationDate=Book.PublicationDate,
+                                PublicationDate=Book.PublicationDate.ToString(),
                                 PublisherID=Book.PublisherID,
                                 PublisherName=Publisher.PublisherName,
                                 RatingCount=Book.RatingCount,
                                 Title=Book.Title,
                                 TextRreviewsCount=Book.TextReviewsCount,
+                                LangID=Lang.LangID,
+                                LangName=Lang.LangName,
                                 BookAuth=(from Bk in _db.Books
                                              join BkAuth in _db.BookAuthors
                                              on Bk.BookID equals BkAuth.BookID
@@ -47,16 +51,7 @@ namespace Bookstore.Services
                                                  AuthorID=BkAuth.AuthorID,
                                                 AuthName=(BkAuth.Author.FirstName+" "+ BkAuth.Author.LastName),
                                              }).ToList()
-                                             ,
-                                BookLang= (from Bk in _db.Books
-                                           join BkLang in _db.BookLanguages
-                                           on Bk.BookID equals BkLang.BookID
-                                           where Book.BookID == Bk.BookID
-                                           select new BookLanguagesEntity()
-                                           {
-                                               LangID = BkLang.LangID,
-                                               LangName = BkLang.Language.LangName
-                                           }).ToList()
+                                             
 
                            }).ToList();
 
@@ -86,15 +81,7 @@ namespace Bookstore.Services
                         _db.BookAuthors.Remove(BookData);
                     }
 
-                    var BookLang= (from BkLang in _db.BookLanguages
-                                   where BkLang.BookID == Id
-                                   select BkLang
-                                      ).ToList();
-
-                    foreach (var BookData in BookLang)
-                    {
-                          _db.BookLanguages.Remove(BookData);
-                    }
+                 
                     _db.SaveChanges();
 
 
@@ -116,6 +103,11 @@ namespace Bookstore.Services
             try
             {
 
+                var DateConversion = Convert.ToDateTime(BookData.PublicationDate);
+                //var RatingConversion = float.Parse(BookData.AvgRating);
+              
+                    //DateTime.ParseExact(BookData.PublicationDate, "dd/MM/yyyy",null);
+
                 var NewBook = (from Bk in _db.Books
                                   where BookData.BookID == Bk.BookID
                                   select Bk).FirstOrDefault();
@@ -130,32 +122,27 @@ namespace Bookstore.Services
                         ISBN = BookData.ISBN,
                         ISBN13 = BookData.ISBN13,
                         NumberPages = BookData.NumberPages,
-                        PublicationDate = BookData.PublicationDate,
+                        PublicationDate = DateConversion,
                         RatingCount = BookData.RatingCount,
                         TextReviewsCount = BookData.TextRreviewsCount,
-                        PublisherID = BookData.PublisherID
+                        PublisherID = BookData.PublisherID,
+                        LanguageID=BookData.LangID
                     };
 
                     _db.Books.Add(NewBook);
                     _db.SaveChanges();
+                   
 
                     foreach (var Item in BookData.BookAuth)
                     {
                         _db.BookAuthors.Add(new BookAuthors()
                         {
                             AuthorID = Item.AuthorID,
-                            BookID = BookData.BookID
+                            BookID = NewBook.BookID
                         });
                     };
 
-                    foreach (var Item in BookData.BookLang)
-                    {
-                        _db.BookLanguages.Add(new BookLanguages()
-                        {
-                            LangID = Item.LangID,
-                            BookID = BookData.BookID
-                        });
-                    };
+                   
 
                 }
                 else //edit
@@ -164,11 +151,12 @@ namespace Bookstore.Services
                     NewBook.NumberPages = BookData.NumberPages;
                     NewBook.ISBN = BookData.ISBN;
                     NewBook.ISBN13 = BookData.ISBN13;
-                    NewBook.PublicationDate = BookData.PublicationDate;
+                    NewBook.PublicationDate = DateConversion;
                     NewBook.RatingCount = BookData.RatingCount;
                     NewBook.TextReviewsCount = BookData.TextRreviewsCount;
                     NewBook.PublisherID = BookData.PublisherID;
-
+                    NewBook.AvgRating = BookData.AvgRating;
+                    NewBook.LanguageID = BookData.LangID;
                     var BookAuth = (from Bk in _db.Books
                                     join BkAth in _db.BookAuthors
                                     on Bk.BookID equals BkAth.BookID
@@ -205,42 +193,7 @@ namespace Bookstore.Services
                         }
 
 
-                        var BookLang = (from Bk in _db.Books
-                                        join BkLan in _db.BookLanguages
-                                        on Bk.BookID equals BkLan.BookID
-                                        where BookData.BookID == BkLan.BookID
-                                        select new BookAuthors() { AuthorID = BkLan.LangID }).ToList();
-                        foreach (var Lang in BookData.BookLang)
-                        {
-                            if (Lang.DML == "add")
-                            {
-                                _db.BookLanguages.Add(new BookLanguages()
-                                {
-                                    LangID = Lang.LangID,
-                                    BookID = BookData.BookID
-                                });
-                            }
-                            else if (Lang.DML == "delete")
-                            {
-                                var Info = (from Lng in _db.BookLanguages
-                                            where Lng.LangID == Lang.LangID && Lng.BookID == BookData.BookID
-                                            select Lng).ToList();
-
-                                if (Info.Count > 0)
-                                {
-                                    // failed delete
-                                    return 3;
-                                }
-                                else
-                                {
-                                    var Detail = (from Lng in _db.BookLanguages
-                                                  where Lng.LangID == Lang.LangID && Lng.BookID == BookData.BookID
-                                                  select Lng).FirstOrDefault();
-                                    _db.BookLanguages.Remove(Detail);
-                                }
-                            }
-
-                        }
+                       
 
                     }
                 }

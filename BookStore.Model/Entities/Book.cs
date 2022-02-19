@@ -20,7 +20,7 @@ namespace Bookstore.Models
 
         public string ISBN13 { set; get; }
         public double NumberPages { set; get; }
-        public float AvgRating { set; get; }
+        public float? AvgRating { set; get; }
         public double RatingCount { set; get; }
         public double TextReviewsCount { set; get; }
 
@@ -30,9 +30,12 @@ namespace Bookstore.Models
         [ForeignKey("Publisher")]
         public int PublisherID { set; get; }
 
+        [ForeignKey("Language")]
+        public int LanguageID { set; get; }
+
         public Publisher Publisher{ set; get; }
 
         public List<Author> Authors { set; get; }
-        public List<Language> Languages { set; get; }
+        public Language Language { set; get; }
     }
 }

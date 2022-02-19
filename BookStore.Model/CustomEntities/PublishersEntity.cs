@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Model.CustomEntities
 {
-   public class BookLanguagesEntity
+    public class PublishersEntity
     {
-        public string LangName { set; get; }
-        public int LangID { set; get; }
-
+        public string PublisherName { set; get; }
+        public int PublID { set; get; }
     }
 }

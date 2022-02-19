@@ -1,5 +1,7 @@
 ﻿using Bookstore.Services;
 using Bookstore.Services.Interface;
+using BookStore.Business.Languages;
+using BookStore.Business.Publishers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ namespace BookstoreWebApi.Extenstions
         public static void ServicesInjection(this IServiceCollection services)
         {
             services.AddScoped<IBooks,Books>();
+            services.AddScoped<IPublishers,Publishers>();
+            services.AddScoped<ILanguages,Languages>();
 
         }
     }
